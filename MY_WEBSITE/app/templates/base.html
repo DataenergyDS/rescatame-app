@@ -6,16 +6,30 @@
     <title>Welcome to - My flask app</title>
     
 </head>
-<body style="background-color: crimson;">
+<body style="background-color: antiquewhite;">
 
     <div>
         RESCATAME:
-        <a href="/index">Home</a>
-        <a href="/login">Login</a>
-        <a href="/sign_up">Sign up</a>
-        <a href="/afiliate">Afiliate</a>
+        <a href="{{ url_for('index') }}">Home</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}">Login</a>
+        {% else %}
+        <a href="{{ url_for('logout')}}">Logout</a>
+        {% endif %}
+        <a href="{{ url_for('register') }}">Sign up</a>
+        <a href="{{ url_for('afiliate') }}">Afiliate</a>
         
     </div>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
 </body>
 </html>
